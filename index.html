@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">E-commerce Assignment</div>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#Prod-nav">Products</a></li>
+         <li> <a href="#cate-nav">Categories </a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="adminbtn">
+        <button class="btn" id="adminBtn" style="margin-left: 20px">Login As An Admin</button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="overlay"></div>
+      <div class="hero-text">
+        <h1>Upgrade Your Style</h1>
+        <p>Gaming and quality products</p>
+        <a href="#" class="btn">Explore Now</a>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+      <div class="feature">
+        <i class="fa fa-truck"></i>
+        <h3>Fast Delivery</h3>
+        <p>Quick and reliable shipping.</p>
+      </div>
+      <div class="feature">
+        <i class="fa fa-tag"></i>
+        <h3>Best Prices</h3>
+        <p>Affordable deals every day.</p>
+      </div>
+      <div class="feature">
+        <i class="fa fa-shield-halved"></i>
+        <h3>Secure Payments</h3>
+        <p>Your data is always protected.</p>
+      </div>
+    </section>
+    <!-- CATEGORIES SECTION -->
+    <section class="categories" id="cate-nav">
+      <h2 class="section-title">Categories</h2>
+      <div class="category-grid">
+        <div class="category-card">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <p>All Products</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-computer-mouse"></i>
+          <p>Mouse</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-keyboard"></i>
+          <p>Keyboard</p>
+        </div>
+        <div class="category-card">
+          <i class="fa fa-tv"></i>
+          <p>Monitors</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-headphones"></i>
+          <p>Headphones</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-headphones-simple"></i>
+          <p>EarBuds</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-volume-high"></i>
+          <p>speaker</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-bolt"></i>
+          <p>charger</p>
+        </div>
+        <div class="category-card">
+          <i class="fa-solid fa-laptop"></i>
+          <p>Laptops</p>
+        </div>
+        <div class="category-card">
+          <i class="fa fa-gift"></i>
+          <p>Other Accessories</p>
+        </div>
+      </div>
+    </section>
+    <section
+      id="adminLogin"
+      style="display: none; padding: 50px; text-align: center"
+    >
+      <h2>Admin Login</h2>
+      <input
+        type="text"
+        id="adminUsername"
+        placeholder="Username"
+        style="margin: 10px; padding: 8px"
+      />
+      <input
+        type="password"
+        id="adminPassword"
+        placeholder="Password"
+        style="margin: 10px; padding: 8px"
+      />
+      <button
+        id="adminLoginBtn"
+        style="
+          padding: 10px 20px;
+          background: #f9c349;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+        "
+      >
+        Login
+      </button>
+    </section>
+
+    <!-- PRODUCTS SLIDER -->
+    <section class="products" id="Prod-nav">
+      <h2 class="section-title">Products</h2>
+
+      <div class="slider-controls">
+        <button id="prevBtn" class="slider-btn">❮</button>
+        <button id="nextBtn" class="slider-btn">❯</button>
+      </div>
+
+      <div class="product-slider">
+        <div id="productGrid" class="product-grid">
+          <!-- JS will load 9 cards here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMO -->
+    <section class="promo">
+      <div class="promo-box">
+        <h2>Special Offer</h2>
+        <p>Get up to 50% off on selected products.</p>
+        <a href="#" class="promo-btn">Shop Now</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-col">
+        <h3>BrandStore</h3>
+        <p>Your trusted shopping place.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <p>Keyboards</p>
+        <p>Mouses</p>
+        <p>Monitors</p>
+        <p>Accessories</p>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <p>FAQ</p>
+        <p>Returns</p>
+        <p>Contact</p>
+      </div>
+    </footer>
+<section id="adminPanel" style="display: none; padding: 50px; text-align: center;">
+    <h2>Admin Panel</h2>
+    
+    <input type="text" id="productName" placeholder="Product Name" style="margin: 10px; padding: 8px;">
+    <input type="text" id="productPrice" placeholder="Product Price" style="margin: 10px; padding: 8px;">
+    <input type="text" id="productImage" placeholder="Image URL" style="margin: 10px; padding: 8px;">
+
+    
+    <select id="productCategory" style="margin: 10px; padding: 8px;">
+        <option value="Mouse">Mouse</option>
+        <option value="Keyboard">Keyboard</option>
+        <option value="Monitors">Monitors</option>
+        <option value="Headphones">Headphones</option>
+        <option value="EarBuds">EarBuds</option>
+        <option value="speaker">Speaker</option>
+        <option value="charger">Charger</option>
+        <option value="Laptops">Laptops</option>
+        <option value="Other Accessories">Other Accessories</option>
+    </select>
+    <select id="productCategory">
+    <option selected disabled>Select Category</option>
+</select>
+    <br>
+    <button id="addProductBtn" style="padding: 10px 20px; margin-top: 10px; background: #F9C349; border: none; border-radius: 6px; cursor: pointer;">
+        Add Product
+    </button>
+
+        <button class="btn" onclick="window.location.reload()" style="display: none;" id="refreshbtn">See Added Product</button>
+
+      <br>
+      <form id="addCategoryForm">
+  <br><br><br>
+    <input type="text" id="categoryName" placeholder="Enter category name" />
+    <button type="submit">Add Category</button>
+</form>
+
+<div id="categoriesList"></div>
+
+</section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
