@@ -1,9 +1,18 @@
-const productGrid = document.getElementById("productGrid");
-const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
-const categoryCards = document.querySelectorAll(".category-card");
-let currentSlide = 0;
-const perPage = 9;
+const productGrid = document.getElementById("productGrid")
+const nextBtn = document.getElementById("nextBtn")
+const prevBtn = document.getElementById("prevBtn")
+const categoryCards = document.querySelectorAll(".category-card")
+const hamburger = document.createElement("div")
+hamburger.classList.add("hamburger")
+hamburger.innerHTML = '<span></span><span></span><span></span>'
+document.querySelector(".navbar").appendChild(hamburger)
+const navLinks = document.querySelector(".nav-links")
+hamburger.addEventListener("click", () => {
+  navLinks.classList.toggle("show")
+})
+
+let currentSlide = 0
+const perPage = 9
 const defaultProducts = [
     {img:"https://m.media-amazon.com/images/I/71W3sbCbttL._AC_SL1500_.jpg", name:"Wireless Earbuds Bluetooth 5.3 Headphones 40Hrs", price:"$29", category:"EarBuds"},
     {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGoz1bExe_c6yz0Xub_QyaRv2OFu0YSMtL-g&s", name:"HyperX Cloud Stinger 2 Core Gaming Headset", price:"$49", category:"Headphones"},
@@ -24,14 +33,14 @@ const defaultProducts = [
     {img:"https://www.lightsupplier.co.uk/cdn/shop/files/RGBStripKit.gif?v=1717160968g", name:"Led Lights for Room RGB 5050 Led Strip with Remote Control ", price:"$49", category:"Other Accessories"},
     {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSenJngkwYuT3y80_E28noFPiGkbwdW0YMgUw&s", name:"Xiaomi Mi Portable Bluetooth Speaker", price:"$20", category:"speaker"}
 ];
-let storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-let products = [...defaultProducts, ...storedProducts];
-let filteredProducts = [...products];
+let storedProducts = JSON.parse(localStorage.getItem("products")) || []
+let products = [...defaultProducts, ...storedProducts]
+let filteredProducts = [...products]
 function renderProducts() {
-    const start = currentSlide * perPage;
-    const end = start + perPage;
-    const pageItems = filteredProducts.slice(start, end);
-    productGrid.style.opacity = 0;
+    const start = currentSlide * perPage
+    const end = start + perPage
+    const pageItems = filteredProducts.slice(start, end)
+    productGrid.style.opacity = 0
     setTimeout(() => {
         productGrid.innerHTML = pageItems.map((p) => `
             <div class="product-card">
@@ -39,105 +48,103 @@ function renderProducts() {
                 <h3>${p.name}</h3>
                 <p class="price">${p.price}</p>
                 ${localStorage.getItem("isAdmin") === "true" ? `<button class="deleteBtn" data-index="${products.indexOf(p)}">Delete</button>` : ""}
-            </div>`).join("");
+            </div>`).join("")
         document.querySelectorAll(".deleteBtn").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                const prodIndex = e.target.getAttribute("data-index");
-                deleteProduct(prodIndex);
-            });});
-        productGrid.style.opacity = 1;
+                const prodIndex = e.target.getAttribute("data-index")
+                deleteProduct(prodIndex)
+            });})
+        productGrid.style.opacity = 1
     }, 100);}
 nextBtn.addEventListener('click', () => {
-    const maxSlide = Math.ceil(filteredProducts.length / perPage) - 1;
+    const maxSlide = Math.ceil(filteredProducts.length / perPage) - 1
     if(currentSlide < maxSlide){
-        currentSlide++;
-        renderProducts();
-    }});
+        currentSlide++
+        renderProducts()
+    }})
 prevBtn.addEventListener('click', () => {
     if(currentSlide > 0){
         currentSlide--;
-        renderProducts();
-}});
+        renderProducts()
+}})
 categoryCards.forEach(card => {
     card.addEventListener('click', () => {
-        const category = card.textContent.trim();
-        currentSlide = 0;
-
+        const category = card.textContent.trim()
+        currentSlide = 0
         if(category === "All Products"){
-            filteredProducts = [...products];
+            filteredProducts = [...products]
         } 
         else {
-            filteredProducts = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+            filteredProducts = products.filter(p => p.category.toLowerCase() === category.toLowerCase())
         }
-
-        renderProducts();
-    });});
+        renderProducts()
+    });})
 renderProducts();
-const adminBtn = document.getElementById("adminBtn");
-const adminLogin = document.getElementById("adminLogin");
-const heroSection = document.querySelector(".hero");
-const productsSection = document.querySelector(".products");
-const adminPanel = document.getElementById("adminPanel");
+const adminBtn = document.getElementById("adminBtn")
+const adminLogin = document.getElementById("adminLogin")
+const heroSection = document.querySelector(".hero")
+const productsSection = document.querySelector(".products")
+const adminPanel = document.getElementById("adminPanel")
 adminBtn.addEventListener("click", () => {
-    heroSection.style.display = "none";
-    productsSection.style.display = "none";
-    adminLogin.style.display = "block";
+    heroSection.style.display = "none"
+    productsSection.style.display = "none"
+    adminLogin.style.display = "block"
 });
-const adminCredentials = { username: "admin", password: "12345" };
+const adminCredentials = { username: "admin", password: "12345" }
 document.getElementById("adminLoginBtn").addEventListener("click", () => {
-    const username = document.getElementById("adminUsername").value;
-    const password = document.getElementById("adminPassword").value;
+    const username = document.getElementById("adminUsername").value
+    const password = document.getElementById("adminPassword").value
     if(username === adminCredentials.username && password === adminCredentials.password){
-        localStorage.setItem("isAdmin", "true");
-        showAdminPanel();
+        localStorage.setItem("isAdmin", "true")
+        showAdminPanel()
     } 
     else {
-        alert("Invalid username or password!");
-        window.location.reload();
+        alert("Invalid username or password!")
+        window.location.reload()
     }
-});
+})
 function showAdminPanel() {
-    adminLogin.style.display = "none";
-    adminPanel.style.display = "block";
+    adminLogin.style.display = "none"
+    adminPanel.style.display = "block"
 }
-const addProductBtn = document.getElementById("addProductBtn");
-const productNameInput = document.getElementById("productName");
-const productPriceInput = document.getElementById("productPrice");
-const productImageInput = document.getElementById("productImage");
-const productCategoryInput = document.getElementById("productCategory");
-const refreshBtn = document.getElementById("refreshbtn");
+const addProductBtn = document.getElementById("addProductBtn")
+const productNameInput = document.getElementById("productName")
+const productPriceInput = document.getElementById("productPrice")
+const productImageInput = document.getElementById("productImage")
+const productCategoryInput = document.getElementById("productCategory")
+const refreshBtn = document.getElementById("refreshbtn")
 addProductBtn.addEventListener("click", () => {
-    const name = productNameInput.value.trim();
-    const price = productPriceInput.value.trim();
-    const img = productImageInput.value.trim();
-    const category = productCategoryInput.value;
+    const name = productNameInput.value.trim()
+    const price = productPriceInput.value.trim()
+    const img = productImageInput.value.trim()
+    const category = productCategoryInput.value
     if(!name || !price || !img){
-        alert("Please fill all fields!");
+        alert("Please fill all fields!")
         refreshBtn.style.display = "none"
         return;
     } 
     else {
-        refreshBtn.style.display = "block";
+        refreshBtn.style.display = "block"
     }
-    const newProduct = { name, price, img, category };
-    let storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-    storedProducts.push(newProduct);
-    localStorage.setItem("products", JSON.stringify(storedProducts));
-    products.push(newProduct);
-    filteredProducts.push(newProduct);
-    renderProducts();
-    productNameInput.value = "";
-    productPriceInput.value = "";
-    productImageInput.value = "";
-    alert("Product added successfully!");
+    const newProduct = { name, price, img, category }
+    let storedProducts = JSON.parse(localStorage.getItem("products")) || []
+    storedProducts.push(newProduct)
+    localStorage.setItem("products", JSON.stringify(storedProducts))
+    products.push(newProduct)
+    filteredProducts.push(newProduct)
+    renderProducts()
+    productNameInput.value = ""
+    productPriceInput.value = ""
+    productImageInput.value = ""
+    alert("Product added successfully!")
 });
 function deleteProduct(index) {
-    index = parseInt(index);
-    products.splice(index, 1);
-    const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-    const newStored = storedProducts.filter(p => p.name !== products[index]?.name);
-    localStorage.setItem("products", JSON.stringify(newStored));
-    filteredProducts = [...products];
+    index = parseInt(index)
+    products.splice(index, 1)
+    const storedProducts = JSON.parse(localStorage.getItem("products")) || []
+    const newStored = storedProducts.filter(p => p.name !== products[index]?.name)
+    localStorage.setItem("products", JSON.stringify(newStored))
+    filteredProducts = [...products]
     renderProducts();
-    alert("Product deleted successfully!");
+    alert("Product deleted successfully!")
 }

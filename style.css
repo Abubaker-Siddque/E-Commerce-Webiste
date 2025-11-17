@@ -374,3 +374,130 @@ body {
 .footer p:hover {
     color: #F9C349;
 }
+/* HAMBURGER MENU */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: #FFF8E6;
+  border-radius: 2px;
+}
+
+/* MOBILE / TABLET MEDIA QUERIES */
+@media (max-width: 1024px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 40px 30px;
+    gap: 20px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 40px 20px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 20px;
+  }
+
+  .navbar {
+    padding: 15px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hide nav-links initially */
+  .nav-links {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    background: #0A1A3A;
+    width: 200px;
+    flex-direction: column;
+    gap: 0;
+    display: none;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    z-index: 100;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links li {
+    text-align: center;
+    padding: 12px 0;
+  }
+
+  /* Hero text smaller */
+  .hero-text h1 {
+    font-size: 32px;
+  }
+  .hero-text p {
+    font-size: 14px;
+  }
+
+  /* Features stack */
+  .features {
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+    gap: 20px;
+  }
+
+  /* Categories stack */
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  /* Products stack */
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  /* Slider buttons smaller */
+  .slider-btn {
+    padding: 10px 12px;
+    font-size: 18px;
+  }
+  #prevBtn {
+    left: 5px;
+  }
+  #nextBtn {
+    right: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .features, .category-grid, .product-grid {
+    padding: 20px 15px;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-text h1 {
+    font-size: 26px;
+  }
+  .hero-text p {
+    font-size: 13px;
+  }
+}
