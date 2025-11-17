@@ -2,11 +2,8 @@ const productGrid = document.getElementById("productGrid");
 const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
 const categoryCards = document.querySelectorAll(".category-card");
-
 let currentSlide = 0;
 const perPage = 9;
-
-// Default products
 const defaultProducts = [
     {img:"https://m.media-amazon.com/images/I/71W3sbCbttL._AC_SL1500_.jpg", name:"Wireless Earbuds Bluetooth 5.3 Headphones 40Hrs", price:"$29", category:"EarBuds"},
     {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGoz1bExe_c6yz0Xub_QyaRv2OFu0YSMtL-g&s", name:"HyperX Cloud Stinger 2 Core Gaming Headset", price:"$49", category:"Headphones"},
@@ -27,25 +24,14 @@ const defaultProducts = [
     {img:"https://www.lightsupplier.co.uk/cdn/shop/files/RGBStripKit.gif?v=1717160968g", name:"Led Lights for Room RGB 5050 Led Strip with Remote Control ", price:"$49", category:"Other Accessories"},
     {img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSenJngkwYuT3y80_E28noFPiGkbwdW0YMgUw&s", name:"Xiaomi Mi Portable Bluetooth Speaker", price:"$20", category:"speaker"}
 ];
-
-// Load stored items
 let storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-
-// MERGE default + stored without duplicates
 let products = [...defaultProducts, ...storedProducts];
-
-// Filtered list
 let filteredProducts = [...products];
-
-
-// ===== RENDER PRODUCTS =====
 function renderProducts() {
     const start = currentSlide * perPage;
     const end = start + perPage;
     const pageItems = filteredProducts.slice(start, end);
-
     productGrid.style.opacity = 0;
-
     setTimeout(() => {
         productGrid.innerHTML = pageItems.map((p) => `
             <div class="product-card">
@@ -53,38 +39,25 @@ function renderProducts() {
                 <h3>${p.name}</h3>
                 <p class="price">${p.price}</p>
                 ${localStorage.getItem("isAdmin") === "true" ? `<button class="deleteBtn" data-index="${products.indexOf(p)}">Delete</button>` : ""}
-            </div>
-        `).join("");
-
+            </div>`).join("");
         document.querySelectorAll(".deleteBtn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const prodIndex = e.target.getAttribute("data-index");
                 deleteProduct(prodIndex);
-            });
-        });
-
+            });});
         productGrid.style.opacity = 1;
-    }, 100);
-}
-
-
-// ===== NEXT / PREV =====
+    }, 100);}
 nextBtn.addEventListener('click', () => {
     const maxSlide = Math.ceil(filteredProducts.length / perPage) - 1;
     if(currentSlide < maxSlide){
         currentSlide++;
         renderProducts();
-    }
-});
+    }});
 prevBtn.addEventListener('click', () => {
     if(currentSlide > 0){
         currentSlide--;
         renderProducts();
-    }
-});
-
-
-// ===== CATEGORY FILTER =====
+}});
 categoryCards.forEach(card => {
     card.addEventListener('click', () => {
         const category = card.textContent.trim();
@@ -92,104 +65,79 @@ categoryCards.forEach(card => {
 
         if(category === "All Products"){
             filteredProducts = [...products];
-        } else {
+        } 
+        else {
             filteredProducts = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
         }
 
         renderProducts();
-    });
-});
-
+    });});
 renderProducts();
-
-
-// ===== ADMIN LOGIN =====
 const adminBtn = document.getElementById("adminBtn");
 const adminLogin = document.getElementById("adminLogin");
 const heroSection = document.querySelector(".hero");
 const productsSection = document.querySelector(".products");
 const adminPanel = document.getElementById("adminPanel");
-
 adminBtn.addEventListener("click", () => {
     heroSection.style.display = "none";
     productsSection.style.display = "none";
     adminLogin.style.display = "block";
 });
-
 const adminCredentials = { username: "admin", password: "12345" };
 document.getElementById("adminLoginBtn").addEventListener("click", () => {
     const username = document.getElementById("adminUsername").value;
     const password = document.getElementById("adminPassword").value;
-
     if(username === adminCredentials.username && password === adminCredentials.password){
         localStorage.setItem("isAdmin", "true");
         showAdminPanel();
-    } else {
+    } 
+    else {
         alert("Invalid username or password!");
         window.location.reload();
     }
 });
-
 function showAdminPanel() {
     adminLogin.style.display = "none";
     adminPanel.style.display = "block";
 }
-
-
-// ===== ADD PRODUCT =====
 const addProductBtn = document.getElementById("addProductBtn");
 const productNameInput = document.getElementById("productName");
 const productPriceInput = document.getElementById("productPrice");
 const productImageInput = document.getElementById("productImage");
 const productCategoryInput = document.getElementById("productCategory");
 const refreshBtn = document.getElementById("refreshbtn");
-
 addProductBtn.addEventListener("click", () => {
     const name = productNameInput.value.trim();
     const price = productPriceInput.value.trim();
     const img = productImageInput.value.trim();
     const category = productCategoryInput.value;
-
     if(!name || !price || !img){
         alert("Please fill all fields!");
         refreshBtn.style.display = "none"
         return;
-    } else {
+    } 
+    else {
         refreshBtn.style.display = "block";
     }
-
     const newProduct = { name, price, img, category };
-
     let storedProducts = JSON.parse(localStorage.getItem("products")) || [];
     storedProducts.push(newProduct);
     localStorage.setItem("products", JSON.stringify(storedProducts));
-
     products.push(newProduct);
     filteredProducts.push(newProduct);
-
     renderProducts();
-
     productNameInput.value = "";
     productPriceInput.value = "";
     productImageInput.value = "";
-
     alert("Product added successfully!");
 });
-
-
-// ===== DELETE PRODUCT =====
 function deleteProduct(index) {
     index = parseInt(index);
-
     products.splice(index, 1);
-
-    // Update localStorage (only stored products)
     const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
     const newStored = storedProducts.filter(p => p.name !== products[index]?.name);
     localStorage.setItem("products", JSON.stringify(newStored));
-
     filteredProducts = [...products];
     renderProducts();
-
     alert("Product deleted successfully!");
 }
